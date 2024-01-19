@@ -72,8 +72,73 @@ Após configurado as migration e o model de User, rodar a migration com o comman
 node ace migration:run
 ```
 
-## Criando migration de service
+Se tudo ocorrer corretamente, será criado as tabelas no banco de dados.
+
+## Criar o primeiro usuario utilizando seeders
 
 ```
-node ace make:migration user
+node ace make:seeder FirstUser
+```
+
+Criará uma seeder de Primeiro Usuário, Configurar essa seeder de com os dados do usuário
+
+```
+import BaseSeeder from '@ioc:Adonis/Lucid/Seeder'
+import User from 'App/Models/User'
+
+export default class FirstUserSeeder extends BaseSeeder {
+  public async run () {
+    await User.create({
+      name: 'John Doe',
+      email: 'johndoe@gmail.com',
+      password: '123456',
+      cpf: '123.456.789-10',
+      phone: '(11) 12345-6789',
+      role: 'admin'
+    })
+    // Write your database queries inside the run method
+  }
+}
+```
+
+Rodar o comando abaixo para aplicar as alteracoes no banco de dados
+
+```
+node ace db:seed
+```
+
+## Criando migration e model de service
+
+```
+node ace make:migration service
+```
+
+definir as colunas da tabela services
+
+```
+import BaseSchema from '@ioc:Adonis/Lucid/Schema'
+
+export default class Services extends BaseSchema {
+  protected tableName = 'services'
+
+  public async up () {
+    this.schema.createTable(this.tableName, (table) => {
+      table.increments('id')
+      table.string('name')
+      table.string('description')
+      table.double('price')
+      table.timestamps(true)
+    })
+  }
+
+  public async down () {
+    this.schema.dropTable(this.tableName)
+  }
+}
+```
+
+criar o model de service
+
+```
+node ace make:model Service
 ```
