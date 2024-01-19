@@ -30,7 +30,7 @@ services:
 npm install @adonisjs/lucid@alpha
 ```
 
-## Configurar o lucid no adonis (ou qualquer outro pacote que tenha sido instalado):
+## Configurar o lucid no adonis
 
 ```
 node ace invoke @adonisjs/lucid
@@ -46,9 +46,34 @@ MYSQL_PASSWORD: Env.schema.string.optional(),
 MYSQL_DB_NAME: Env.schema.string(),
 ```
 
-verificar se no arquivo .env foram criadas as variaveis automaticamente.
-no arquivo env.ts criar a variavel DB_CONNECTION caso não tenha sido criada
+Verificar se no arquivo .env foram criadas as variaveis automaticamente.
+No arquivo env.ts criar a variavel DB_CONNECTION caso não tenha sido criada
 
 ```
 DB_CONNECTION: Env.schema.string(),
+```
+
+## Instalar pacote de autenticacao (auth)
+
+```
+npm i @adonisjs/auth@alpha
+```
+
+## Configurar o auth no adonis
+
+```
+node ace invoke @adonisjs/auth
+```
+
+Deverão serem criadas as migrations e o model de User de acordo com as configuracões.
+Após configurado as migration e o model de User, rodar a migration com o commando:
+
+```
+node ace migration:run
+```
+
+## Criando migration de service
+
+```
+node ace make:migration user
 ```
