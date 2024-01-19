@@ -23,3 +23,5 @@ services:
     ports:
       - "3306:3306"
 ```
+
+# Instalar lucid ORM no projeto:
