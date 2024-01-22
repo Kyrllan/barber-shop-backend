@@ -107,7 +107,7 @@ Rodar o comando abaixo para aplicar as alteracoes no banco de dados
 node ace db:seed
 ```
 
-## Criando migration e model de service
+## Criando migration e model e controller de service
 
 ```
 node ace make:migration service
@@ -141,4 +141,86 @@ criar o model de service
 
 ```
 node ace make:model Service
+```
+
+configurar o modelo de service
+
+```
+import { DateTime } from 'luxon'
+import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
+
+export default class Service extends BaseModel {
+  @column({ isPrimary: true })
+  public id: number
+
+  @column()
+  public name: string
+
+  @column()
+  public description: string
+
+  @column()
+  public price: number
+
+  @column.dateTime({ autoCreate: true })
+  public createdAt: DateTime
+
+  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  public updatedAt: DateTime
+}
+```
+
+criar o controller de service (CRUD)
+
+```
+import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import Service from 'App/Models/Service'
+
+export default class ServicesController {
+  public async index({}: HttpContextContract) {
+    const services = await Service.all()
+
+    return services
+  }
+
+  public async store({request}: HttpContextContract) {
+    const data = request.only(['name', 'description', 'price'])
+    const services = await Service.create(data)
+
+    return services
+  }
+
+  public async show({params}: HttpContextContract) {
+    const services = await Service.findOrFail(params.id)
+    return services
+  }
+
+  public async update({request, params}: HttpContextContract) {
+    const data = request.only(['name', 'description', 'price'])
+    const services = await Service.findOrFail(params.id)
+    services.merge(data)
+    await services.save()
+    return services
+  }
+
+  public async destroy({params}: HttpContextContract) {
+    const services = await Service.findOrFail(params.id)
+
+    await services.delete()
+  }
+}
+```
+
+Aplicar os metodos do controller em uma rota
+
+na pasta start arquivo routes.ts, codigo abaixo aplica todos os metodos do controller nessa rota
+
+```
+Route.resource('services', 'ServicesController').apiOnly()
+```
+
+Aplicar a migration pra criacao da tabela no banco
+
+```
+node ace migration::run
 ```
