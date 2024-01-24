@@ -12,6 +12,7 @@ export default class AuthController {
   }
 
   public async destroy({ auth }: HttpContextContract) {
+    console.log("AUTH", auth);
     await auth.logout();
   }
 }
