@@ -18,6 +18,9 @@
 |
 */
 
-import Route from '@ioc:Adonis/Core/Route'
+import Route from "@ioc:Adonis/Core/Route";
 
-Route.resource('services', 'ServicesController').apiOnly()
+Route.resource("services", "ServicesController").apiOnly();
+Route.resource("users", "UsersController").apiOnly();
+Route.resource("schedules", "SchedulesController").apiOnly();
+Route.resource("auth", "AuthController").apiOnly();
