@@ -29,7 +29,14 @@ export default class Schedules extends BaseSchema {
         .onDelete("CASCADE")
         .onDelete("CASCADE");
       table.date("schedule_date").notNullable();
-      table.string("schedule_time").notNullable();
+      table
+        .integer("schedule_time")
+        .unsigned()
+        .references("id")
+        .inTable("times")
+        .onUpdate("CASCADE")
+        .onDelete("CASCADE")
+        .onDelete("CASCADE");
       table.timestamps(true);
     });
   }
