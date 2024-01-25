@@ -26,23 +26,22 @@ export default class Schedule extends BaseModel {
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime;
 
-  /*   public static boot() {
+  public static boot() {
     super.boot();
 
     this.before("save", async (scheduleInstance: Schedule) => {
+      const dateString = JSON.stringify(scheduleInstance.schedule_date);
+
       const existingSchedule = await this.query()
         .where("barber_id", scheduleInstance.barber_id)
-        .whereRaw("DATE(schedule_date) = ?", [
-          scheduleInstance.schedule_date.toFormat("yyyy-MM-dd"),
-        ])
+        .where("schedule_date", dateString.replace(/"/g, ""))
         .where("schedule_time", scheduleInstance.schedule_time)
         .first();
-
       if (existingSchedule) {
         throw new Error(
           "Já existe um agendamento para este barbeiro nesta data e hora."
         );
       }
     });
-  } */
+  }
 }
