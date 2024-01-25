@@ -13,6 +13,7 @@ export default class SchedulesController {
       "client_id",
       "barber_id",
       "service_id",
+      "schedule_date",
       "schedule_time",
     ]);
 
@@ -39,6 +40,7 @@ export default class SchedulesController {
       "client_id",
       "barber_id",
       "service_id",
+      "schedule_date",
       "schedule_time",
     ]);
 
