@@ -224,3 +224,37 @@ Aplicar a migration pra criacao da tabela no banco
 ```
 node ace migration::run
 ```
+
+## Validando Dados
+
+Criar um validator pra validar e retornar melhores mensagens para o frontend
+
+```
+node ace make:validator Service
+```
+
+```
+import { schema, CustomMessages, rules } from "@ioc:Adonis/Core/Validator";
+import type { HttpContextContract } from "@ioc:Adonis/Core/HttpContext";
+
+export default class ServiceValidator {
+  constructor(protected ctx: HttpContextContract) {}
+
+  public schema = schema.create({
+    name: schema.string({ trim: true }, [
+      rules.unique({ table: "services", column: "name" }),
+    ]),
+    description: schema.string({ trim: true }),
+    price: schema.number(),
+  });
+
+  public messages: CustomMessages = {};
+}
+
+```
+
+caso queira enviar mensagens personalizadas ao frontend:
+
+```
+
+```
