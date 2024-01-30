@@ -327,3 +327,15 @@ Route.group(() => {
   Route.delete("/logout", "AuthController.destroy").middleware("auth");
 }).prefix("auth");
 ```
+
+## Serializacao de dados
+
+Para retornar os dados pro frontend em camelCase (config/database.ts)
+
+```
+  orm: {
+    getSerializeAsKey(_, key) {
+      return key;
+    },
+  },
+```

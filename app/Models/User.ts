@@ -21,19 +21,19 @@ export default class User extends BaseModel {
   @column()
   public phone: string;
 
-  @column()
+  @column({ serialize: Boolean })
   public active: boolean;
 
   @column()
   public role: "admin" | "user" | "employee";
 
-  @column()
+  @column({ serializeAs: null })
   public rememberMeToken?: string;
 
-  @column.dateTime({ autoCreate: true })
+  @column.dateTime({ autoCreate: true, serializeAs: null })
   public createdAt: DateTime;
 
-  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  @column.dateTime({ autoCreate: true, autoUpdate: true, serializeAs: null })
   public updatedAt: DateTime;
 
   @beforeSave()

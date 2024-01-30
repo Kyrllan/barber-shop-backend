@@ -3,7 +3,11 @@ import Schedule from "App/Models/Schedule";
 
 export default class SchedulesController {
   public async index({}: HttpContextContract) {
-    const schedules = await Schedule.all();
+    const schedules = await Schedule.query()
+      .preload("client")
+      .preload("barber")
+      .preload("service")
+      .preload("time");
 
     return schedules;
   }
