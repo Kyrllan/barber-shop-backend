@@ -20,7 +20,13 @@
 
 import Route from "@ioc:Adonis/Core/Route";
 
-Route.resource("service", "ServicesController").apiOnly();
+Route.resource("service", "ServicesController")
+  .apiOnly()
+  .middleware({
+    store: ["acl:admin"],
+    update: ["acl:admin"],
+    destroy: ["acl:admin"],
+  });
 Route.resource("user", "UsersController").apiOnly();
 Route.resource("schedule", "SchedulesController")
   .apiOnly()
@@ -29,8 +35,14 @@ Route.resource("schedule", "SchedulesController")
     update: ["auth"],
     destroy: ["auth"],
   });
-Route.resource("time", "TimesController").apiOnly();
+Route.resource("time", "TimesController")
+  .apiOnly()
+  .middleware({
+    store: ["acl:admin"],
+    update: ["acl:admin"],
+    destroy: ["acl:admin"],
+  });
 Route.group(() => {
   Route.post("/login", "AuthController.store");
-  Route.delete("/logout", "AuthController.destroy");
+  Route.delete("/logout", "AuthController.destroy").middleware("auth");
 }).prefix("auth");

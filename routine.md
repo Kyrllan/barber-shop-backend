@@ -260,3 +260,70 @@ caso queira enviar mensagens personalizadas ao frontend:
     "name.unique": "O campo '{{field}}' deve ser unico",
   };
 ```
+
+## Criando middleware para proteger as rotas
+
+```
+node ace make:middleware Acl
+```
+
+exemplo do middleware criado
+
+```
+import type { HttpContextContract } from "@ioc:Adonis/Core/HttpContext";
+
+export default class Acl {
+  public async handle(
+    { auth, response }: HttpContextContract,
+    next: () => Promise<void>,
+    allowedRoles: string[]
+  ) {
+    const user = await auth.authenticate();
+
+    if (!allowedRoles.includes(user.role)) {
+      return response.unauthorized({ error: { message: "Não Autorizado" } });
+    }
+    return next();
+  }
+}
+```
+
+Registrar o middleware no kernel (start/kernel)
+
+```
+Server.middleware.registerNamed({
+  auth: () => import("App/Middleware/Auth"),
+  acl: () => import("App/Middleware/Acl"),
+});
+```
+
+aplicar o middleware nas rotas
+
+```
+Route.resource("service", "ServicesController")
+  .apiOnly()
+  .middleware({
+    store: ["acl:admin"],
+    update: ["acl:admin"],
+    destroy: ["acl:admin"],
+  });
+Route.resource("user", "UsersController").apiOnly();
+Route.resource("schedule", "SchedulesController")
+  .apiOnly()
+  .middleware({
+    store: ["auth"],
+    update: ["auth"],
+    destroy: ["auth"],
+  });
+Route.resource("time", "TimesController")
+  .apiOnly()
+  .middleware({
+    store: ["acl:admin"],
+    update: ["acl:admin"],
+    destroy: ["acl:admin"],
+  });
+Route.group(() => {
+  Route.post("/login", "AuthController.store");
+  Route.delete("/logout", "AuthController.destroy").middleware("auth");
+}).prefix("auth");
+```
