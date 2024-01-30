@@ -1,5 +1,6 @@
 import { DateTime } from "luxon";
-import { BaseModel, column } from "@ioc:Adonis/Lucid/Orm";
+import { BaseModel, column, belongsTo, BelongsTo } from "@ioc:Adonis/Lucid/Orm";
+import User from "./User";
 
 export default class Schedule extends BaseModel {
   @column({ isPrimary: true })
@@ -7,6 +8,9 @@ export default class Schedule extends BaseModel {
 
   @column()
   public client_id: number;
+
+  @belongsTo(() => User, { foreignKey: "client_id" })
+  public client: BelongsTo<typeof User>;
 
   @column()
   public barber_id: number;

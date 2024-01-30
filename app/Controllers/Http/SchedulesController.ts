@@ -19,6 +19,9 @@ export default class SchedulesController {
 
     try {
       const schedule = await Schedule.create(data);
+
+      await schedule.preload("client");
+
       return schedule;
     } catch (error) {
       return response.badRequest({

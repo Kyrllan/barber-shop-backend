@@ -256,5 +256,7 @@ export default class ServiceValidator {
 caso queira enviar mensagens personalizadas ao frontend:
 
 ```
-
+  public messages: CustomMessages = {
+    "name.unique": "O campo '{{field}}' deve ser unico",
+  };
 ```
