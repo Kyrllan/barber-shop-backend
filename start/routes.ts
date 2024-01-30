@@ -27,7 +27,13 @@ Route.resource("service", "ServicesController")
     update: ["acl:admin"],
     destroy: ["acl:admin"],
   });
-Route.resource("user", "UsersController").apiOnly();
+Route.resource("user", "UsersController")
+  .apiOnly()
+  .middleware({
+    store: ["acl:admin"],
+    update: ["acl:admin"],
+    destroy: ["acl:admin"],
+  });
 Route.resource("schedule", "SchedulesController")
   .apiOnly()
   .middleware({

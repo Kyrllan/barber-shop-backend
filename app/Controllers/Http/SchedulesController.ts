@@ -8,9 +8,10 @@ export default class SchedulesController {
     return schedules;
   }
 
-  public async store({ request, response }: HttpContextContract) {
+  public async store({ request, response, auth }: HttpContextContract) {
+    const userId = auth.user?.id;
+
     const data = request.only([
-      "client_id",
       "barber_id",
       "service_id",
       "schedule_date",
@@ -18,9 +19,12 @@ export default class SchedulesController {
     ]);
 
     try {
-      const schedule = await Schedule.create(data);
+      const schedule = await Schedule.create({
+        ...data,
+        client_id: userId,
+      });
 
-      await schedule.preload("client");
+      //await schedule.preload("client");
 
       return schedule;
     } catch (error) {
@@ -38,9 +42,15 @@ export default class SchedulesController {
     return schedule;
   }
 
-  public async update({ params, request, response }: HttpContextContract) {
+  public async update({
+    params,
+    request,
+    response,
+    auth,
+  }: HttpContextContract) {
+    const userId = auth.user?.id;
+
     const data = request.only([
-      "client_id",
       "barber_id",
       "service_id",
       "schedule_date",
@@ -52,7 +62,10 @@ export default class SchedulesController {
       if (!schedule) {
         return response.notFound();
       }
-      schedule.merge(data);
+      schedule.merge({
+        ...data,
+        client_id: userId,
+      });
       await schedule.save();
       return schedule;
     } catch (error) {
