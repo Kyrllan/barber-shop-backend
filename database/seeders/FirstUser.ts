@@ -18,7 +18,7 @@ export default class FirstUserSeeder extends BaseSeeder {
         password: "123456",
         cpf: "123.456.789-10",
         phone: "(11) 12345-6789",
-        role: "employee",
+        role: "barber",
       },
       {
         name: "Barbeiro 2",
@@ -26,7 +26,7 @@ export default class FirstUserSeeder extends BaseSeeder {
         password: "123456",
         cpf: "123.456.789-10",
         phone: "(11) 12345-6789",
-        role: "employee",
+        role: "barber",
       },
       {
         name: "Cliente 1",

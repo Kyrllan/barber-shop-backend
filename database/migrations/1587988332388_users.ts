@@ -13,7 +13,7 @@ export default class UsersSchema extends BaseSchema {
       table.string("phone").notNullable();
       table.boolean("active").notNullable().defaultTo(true);
       table
-        .enu("role", ["admin", "employee", "user"])
+        .enu("role", ["admin", "barber", "user"])
         .notNullable()
         .defaultTo("user");
       table.string("remember_me_token").nullable();

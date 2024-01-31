@@ -24,7 +24,7 @@ export default class BarbersController {
   }
 
   public async allBarbers({}: HttpContextContract) {
-    const barbers = await User.query().where("role", "employee");
+    const barbers = await User.query().where("role", "barber");
     return barbers;
   }
 }

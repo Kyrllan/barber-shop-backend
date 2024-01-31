@@ -25,7 +25,7 @@ export default class User extends BaseModel {
   public active: boolean;
 
   @column()
-  public role: "admin" | "user" | "employee";
+  public role: "admin" | "user" | "barber";
 
   @column({ serializeAs: null })
   public rememberMeToken?: string;
