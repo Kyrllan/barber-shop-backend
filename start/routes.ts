@@ -52,3 +52,9 @@ Route.group(() => {
   Route.post("/login", "AuthController.store");
   Route.delete("/logout", "AuthController.destroy").middleware("auth");
 }).prefix("auth");
+Route.group(() => {
+  Route.get("/availability", "BarbersController.availability").middleware(
+    "auth"
+  );
+  Route.get("/allBarbers", "BarbersController.allBarbers").middleware("auth");
+}).prefix("barbers");
