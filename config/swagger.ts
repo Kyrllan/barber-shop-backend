@@ -12,7 +12,7 @@ export default {
     definition: {
       openapi: "3.0.0",
       info: {
-        title: "Application with Swagger Docs",
+        title: "Barbershop API",
         version: "1.0.0",
         description: "My application with Swagger docs",
       },
