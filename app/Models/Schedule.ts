@@ -1,3 +1,54 @@
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     Schedule:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: integer
+ *           format: int64
+ *           description: ID do agendamento
+ *         client_id:
+ *           type: integer
+ *           description: ID do cliente
+ *         barber_id:
+ *           type: integer
+ *           description: ID do barbeiro
+ *         service_id:
+ *           type: integer
+ *           description: ID do serviço
+ *         schedule_date:
+ *           type: string
+ *           format: date-time
+ *           description: Data do agendamento
+ *         schedule_time:
+ *           type: integer
+ *           description: ID do horário do agendamento
+ *         createdAt:
+ *           type: string
+ *           format: date-time
+ *           description: Data de criação do registro
+ *         updatedAt:
+ *           type: string
+ *           format: date-time
+ *           description: Data de atualização do registro
+ *       required:
+ *         - client_id
+ *         - barber_id
+ *         - service_id
+ *         - schedule_date
+ *         - schedule_time
+ *       example:
+ *         id: 1
+ *         client_id: 1
+ *         barber_id: 2
+ *         service_id: 1
+ *         schedule_date: "2024-02-07T12:00:00Z"
+ *         schedule_time: 1
+ *         createdAt: "2024-02-07T12:34:56Z"
+ *         updatedAt: "2024-02-07T12:34:56Z"
+ */
 import { DateTime } from "luxon";
 import { BaseModel, column, belongsTo, BelongsTo } from "@ioc:Adonis/Lucid/Orm";
 import User from "./User";
